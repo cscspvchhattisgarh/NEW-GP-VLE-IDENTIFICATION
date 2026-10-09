@@ -6,150 +6,562 @@
   <title>GP VLE Identification Form</title>
   <!-- Bootstrap 5 & FontAwesome Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     :root {
       --primary-color: #0d6efd;
-      --bg-color: #f4f6f9;
+      --primary-dark: #0b5ed7;
+      --accent-color: #10b981;
+      --accent-light: #d1fae5;
+      --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --bg-light: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.15);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.2);
     }
     
     body {
-      background-color: var(--bg-color);
+      background: var(--bg-light);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 30px 15px;
+      padding: 40px 15px;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated Background Elements */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: moveBackground 20s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes moveBackground {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header Section */
+    .page-header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: slideDownFade 0.8s ease-out;
+    }
+
+    .page-header h1 {
+      color: #2d3748;
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-header p {
+      color: #718096;
+      font-size: 1.1rem;
+      font-weight: 500;
     }
 
     .form-card {
-      max-width: 750px;
+      max-width: 800px;
       margin: 0 auto;
       background: #ffffff;
-      padding: 35px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      border: 1px solid #e9ecef;
+      padding: 45px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      animation: slideUpFade 0.8s ease-out 0.2s backwards;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative element on card */
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #10b981 100%);
     }
 
     .form-header {
       text-align: center;
-      margin-bottom: 30px;
-      border-bottom: 2px solid #e9ecef;
-      padding-bottom: 20px;
+      margin-bottom: 35px;
+      padding-bottom: 25px;
+      border-bottom: 2px solid #f0f4f8;
     }
 
     .form-header h3 {
-      color: #1e293b;
-      font-weight: 700;
+      color: #2d3748;
+      font-weight: 800;
       letter-spacing: -0.5px;
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .form-header .icon-header {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 15px;
+      margin-bottom: 15px;
+      animation: bounceIcon 2s infinite;
+    }
+
+    .form-header .icon-header i {
+      color: white;
+      font-size: 28px;
+    }
+
+    @keyframes bounceIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .form-header p {
+      color: #718096;
+      font-size: 0.95rem;
+      margin: 0;
     }
 
     /* Multi-step Navigation Progress Bar */
     .step-wizard {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 30px;
+      margin-bottom: 35px;
       position: relative;
+      padding: 20px 0;
     }
 
     .step-wizard::before {
       content: '';
       position: absolute;
-      top: 50%;
+      top: 30px;
       left: 0;
       right: 0;
       height: 3px;
-      background: #e2e8f0;
+      background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 50%, #e2e8f0 100%);
       z-index: 1;
-      transform: translateY(-50%);
     }
 
     .step-wizard-step {
       position: relative;
       z-index: 2;
       background: #fff;
-      padding: 0 10px;
+      padding: 0 15px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-weight: 600;
       color: #94a3b8;
+      transition: all 0.3s ease;
+      cursor: default;
     }
 
     .step-wizard-step.active {
-      color: var(--primary-color);
+      color: #667eea;
+      transform: translateY(-5px);
     }
 
     .step-icon {
-      width: 36px;
-      height: 36px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       background: #f1f5f9;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
-      border: 2px solid #cbd5e1;
+      font-size: 16px;
+      font-weight: 700;
+      border: 3px solid #cbd5e1;
+      transition: all 0.3s ease;
     }
 
     .step-wizard-step.active .step-icon {
-      background: var(--primary-color);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: #fff;
-      border-color: var(--primary-color);
+      border-color: #667eea;
+      box-shadow: 0 0 0 8px rgba(102, 126, 234, 0.1);
     }
 
     .form-step {
       display: none;
+      animation: fadeIn 0.5s ease-in-out;
     }
 
     .form-step.active {
       display: block;
-      animation: fadeIn 0.4s ease-in-out;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { 
+        opacity: 0; 
+        transform: translateY(15px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+
+    @keyframes slideDownFade {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUpFade {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .form-label {
-      font-weight: 600;
-      color: #334155;
-      font-size: 0.9rem;
+      font-weight: 700;
+      color: #2d3748;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .form-label::after {
+      content: '*';
+      color: #ef4444;
     }
 
     .form-control, .form-select {
-      border-radius: 8px;
-      padding: 10px 14px;
-      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 12px 16px;
+      border: 2px solid #e2e8f0;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      background-color: #f8fafc;
     }
 
     .form-control:focus, .form-select:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+      border-color: #667eea;
+      background-color: #fff;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      outline: none;
+    }
+
+    .form-control:hover, .form-select:hover {
+      border-color: #cbd5e1;
+      background-color: #fff;
+    }
+
+    .form-control.is-invalid,
+    .form-select.is-invalid {
+      border-color: #ef4444;
+      background-image: none;
+    }
+
+    .invalid-feedback {
+      color: #ef4444;
+      font-size: 0.85rem;
+      margin-top: 5px;
+      display: block;
+    }
+
+    .mb-3 {
+      margin-bottom: 20px;
     }
 
     .btn-custom {
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .btn-primary.btn-custom {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary.btn-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+      background: linear-gradient(135deg, #5568d3 0%, #6a3d8f 100%);
+    }
+
+    .btn-success.btn-custom {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-success.btn-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(16, 185, 129, 0.6);
+      background: linear-gradient(135deg, #0d9668 0%, #047857 100%);
+    }
+
+    .btn-outline-secondary.btn-custom {
+      border: 2px solid #cbd5e1;
+      color: #4b5563;
+      background: transparent;
+    }
+
+    .btn-outline-secondary.btn-custom:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+      color: #1e293b;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Button layout */
+    .d-flex {
+      gap: 15px;
+    }
+
+    /* SHG Section Styling */
+    #shgSection {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dbeafe 100%);
+      border: 2px solid #86efac;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #shgSection::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: rgba(16, 185, 129, 0.05);
+      border-radius: 50%;
+      margin: -30px -30px 0 0;
+    }
+
+    #shgSection h6 {
+      color: #047857;
+      font-weight: 800;
+      font-size: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    #shgSection .form-label {
+      color: #059669;
+    }
+
+    #shgSection .form-control,
+    #shgSection .form-select {
+      background-color: rgba(255, 255, 255, 0.7);
+      border-color: #86efac;
+    }
+
+    /* Alert Messages */
+    .alert {
+      border-radius: 12px;
+      border: none;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      font-weight: 500;
+      animation: slideDownFade 0.4s ease-out;
+    }
+
+    .alert-danger {
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      color: #991b1b;
+      border-left: 4px solid #dc2626;
+    }
+
+    .alert-success {
+      background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+      color: #166534;
+      border-left: 4px solid #16a34a;
+    }
+
+    /* Modal Styling */
+    .modal-content {
+      border: none;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border-top: 4px solid #10b981;
     }
 
     .modal-success-icon {
-      font-size: 60px;
+      font-size: 80px;
       color: #10b981;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      animation: scalePopIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes scalePopIn {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-body h3 {
+      color: #047857;
+      font-weight: 900;
+      font-size: 1.8rem;
+    }
+
+    .modal-body p {
+      color: #718096;
+      font-size: 1rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .page-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .form-card {
+        padding: 25px;
+        border-radius: 15px;
+      }
+
+      .step-wizard {
+        gap: 10px;
+      }
+
+      .step-wizard-step {
+        font-size: 0.85rem;
+        padding: 0 8px;
+      }
+
+      .step-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+      }
+
+      .btn-custom {
+        width: 100%;
+        padding: 14px 20px;
+      }
+
+      .d-flex {
+        flex-direction: column;
+      }
+
+      .justify-content-between {
+        justify-content: center !important;
+      }
+
+      .row {
+        margin-left: -8px;
+        margin-right: -8px;
+      }
+
+      .col-md-6 {
+        padding-left: 8px;
+        padding-right: 8px;
+        width: 100%;
+      }
+
+      .form-header h3 {
+        font-size: 1.4rem;
+      }
+    }
+
+    /* Loading spinner animation */
+    .spinner-border-sm {
+      width: 1rem;
+      height: 1rem;
+      border-width: 0.2em;
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Input placeholder styling */
+    .form-control::placeholder,
+    .form-select::placeholder {
+      color: #cbd5e1;
+      font-weight: 500;
     }
   </style>
 </head>
 <body>
 
 <div class="container">
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <h1>GP VLE Identification</h1>
+    <p>Empower Your Rural Business - Complete Your Registration Today</p>
+  </div>
+
   <div class="form-card">
     
-    <!-- HEADER -->
+    <!-- FORM HEADER -->
     <div class="form-header">
-      <h3><i class="fa-solid fa-id-card text-primary me-2"></i>GP VLE Identification Form</h3>
-      <p class="text-muted mb-0">Fill in location first to select available Gram Panchayat</p>
+      <div class="icon-header">
+        <i class="fa-solid fa-id-card"></i>
+      </div>
+      <h3>VLE Registration Form</h3>
+      <p>Select your location first, then provide your personal details</p>
     </div>
 
     <!-- FORM WRAPPER -->
@@ -173,7 +585,7 @@
         <!-- STEP 1: LOCATION MAPPING (FIRST STEP) -->
         <div class="form-step active" id="step1">
           <div class="mb-3">
-            <label class="form-label">District *</label>
+            <label class="form-label">District</label>
             <select id="district" class="form-select" onchange="onDistrictChange()" required>
               <option value="">Loading Available Districts...</option>
             </select>
@@ -181,7 +593,7 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Block *</label>
+            <label class="form-label">Block</label>
             <select id="block" class="form-select" onchange="onBlockChange()" required disabled>
               <option value="">Select District First</option>
             </select>
@@ -189,7 +601,7 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Gram Panchayat *</label>
+            <label class="form-label">Gram Panchayat</label>
             <select id="gp" class="form-select" onchange="onGPChange()" required disabled>
               <option value="">Select Block First</option>
             </select>
@@ -197,7 +609,7 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Village *</label>
+            <label class="form-label">Village</label>
             <select id="village" class="form-select" required disabled>
               <option value="">Select GP First</option>
             </select>
@@ -205,39 +617,41 @@
           </div>
 
           <div class="d-flex justify-content-end mt-4">
-            <button type="button" class="btn btn-primary btn-custom" onclick="goToStep2()">Next Step <i class="fa-solid fa-arrow-right ms-2"></i></button>
+            <button type="button" class="btn btn-primary btn-custom" onclick="goToStep2()">
+              Next Step <i class="fa-solid fa-arrow-right ms-2"></i>
+            </button>
           </div>
         </div>
 
         <!-- STEP 2: PERSONAL DETAILS (SECOND STEP) -->
         <div class="form-step" id="step2">
           <div class="mb-3">
-            <label class="form-label">Full Name (As per Aadhaar) *</label>
+            <label class="form-label">Full Name (As per Aadhaar)</label>
             <input type="text" id="name" class="form-control" placeholder="Enter full name" required>
             <div class="invalid-feedback">Please enter your full name as per Aadhaar.</div>
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Email ID (Linked with Aadhaar) *</label>
+            <label class="form-label">Email ID (Linked with Aadhaar)</label>
             <input type="email" id="email" class="form-control" placeholder="example@email.com" required>
             <div class="invalid-feedback">Please enter a valid email address.</div>
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Mobile Number (Linked with Aadhaar) *</label>
+            <label class="form-label">Mobile Number (Linked with Aadhaar)</label>
             <input type="tel" id="mobile" class="form-control" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" required>
             <div class="invalid-feedback">Please enter a valid 10-digit mobile number.</div>
           </div>
 
           <div class="mb-3">
-            <label class="form-label">PAN Card Number *</label>
+            <label class="form-label">PAN Card Number</label>
             <input type="text" id="pan" class="form-control" pattern="[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}" maxlength="10" style="text-transform:uppercase" placeholder="ABCDE1234F" required>
             <div class="invalid-feedback">Please enter a valid 10-character PAN Card Number.</div>
           </div>
 
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label class="form-label">Computer Availability *</label>
+              <label class="form-label">Computer Availability</label>
               <select id="computer" class="form-select" required>
                 <option value="">Select Option</option>
                 <option value="Yes">Yes</option>
@@ -247,7 +661,7 @@
             </div>
 
             <div class="col-md-6 mb-3">
-              <label class="form-label">Gender *</label>
+              <label class="form-label">Gender</label>
               <select id="gender" class="form-select" onchange="toggleSHGSection()" required>
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
@@ -259,11 +673,11 @@
           </div>
 
           <!-- Conditional SHG Fields -->
-          <div id="shgSection" style="display: none;" class="p-3 bg-light rounded border mb-3">
-            <h6 class="fw-bold text-primary mb-3"><i class="fa-solid fa-users me-2"></i>SHG Member Details</h6>
+          <div id="shgSection" style="display: none;">
+            <h6><i class="fa-solid fa-users me-2"></i>SHG Member Details</h6>
             
             <div class="mb-3">
-              <label class="form-label">Are you an SHG Member? *</label>
+              <label class="form-label">Are you an SHG Member?</label>
               <select id="shgMember" class="form-select" onchange="toggleSHGFields()">
                 <option value="No">No</option>
                 <option value="Yes">Yes</option>
@@ -272,13 +686,13 @@
 
             <div id="shgFields" style="display: none;">
               <div class="mb-3">
-                <label class="form-label">SHG Group Name *</label>
+                <label class="form-label">SHG Group Name</label>
                 <input type="text" id="shgName" class="form-control" placeholder="Enter group name">
                 <div class="invalid-feedback">Please enter SHG Group Name.</div>
               </div>
 
               <div class="mb-3">
-                <label class="form-label">SHG Group Code (11 Digits) *</label>
+                <label class="form-label">SHG Group Code (11 Digits)</label>
                 <input type="text" id="shgCode" class="form-control" maxlength="11" pattern="[0-9]{11}" placeholder="11-digit SHG code">
                 <div class="invalid-feedback">Please enter a valid 11-digit SHG Group Code.</div>
               </div>
@@ -286,8 +700,12 @@
           </div>
 
           <div class="d-flex justify-content-between mt-4">
-            <button type="button" class="btn btn-outline-secondary btn-custom" onclick="goToStep1()"><i class="fa-solid fa-arrow-left me-2"></i> Previous</button>
-            <button type="submit" id="submitBtn" class="btn btn-success btn-custom"><i class="fa-solid fa-paper-plane me-2"></i> Submit Application</button>
+            <button type="button" class="btn btn-outline-secondary btn-custom" onclick="goToStep1()">
+              <i class="fa-solid fa-arrow-left me-2"></i> Previous
+            </button>
+            <button type="submit" id="submitBtn" class="btn btn-success btn-custom">
+              <i class="fa-solid fa-paper-plane me-2"></i> Submit Application
+            </button>
           </div>
         </div>
 
@@ -300,13 +718,13 @@
 <!-- SUCCESS CENTER POPUP MODAL -->
 <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center p-4" style="border-radius: 16px;">
+    <div class="modal-content p-4" style="border-radius: 20px; text-align: center;">
       <div class="modal-body">
         <div class="modal-success-icon">
           <i class="fa-solid fa-circle-check"></i>
         </div>
         <h3 class="fw-bold text-success mb-2">Success!</h3>
-        <p class="text-secondary fs-5 mb-4">Application submitted successfully!</p>
+        <p class="text-secondary fs-5 mb-4">Your application has been submitted successfully! We'll contact you soon.</p>
         <button type="button" class="btn btn-success btn-custom px-5" data-bs-dismiss="modal" onclick="resetFormToStart()">OK</button>
       </div>
     </div>
@@ -562,6 +980,7 @@
   function showAlert(msg, type) {
     document.getElementById("alertBox").innerHTML = `
       <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-${type === 'danger' ? 'circle-exclamation' : 'circle-check'} me-2"></i>
         ${msg}
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       </div>
