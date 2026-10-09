@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GP VLE Identification Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f4f6f9; padding: 20px 0; }
+    .form-card { max-width: 700px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .section-title { font-size: 1.1rem; font-weight: bold; color: #0d6efd; margin-top: 15px; margin-bottom: 10px; border-bottom: 2px solid #0d6efd; padding-bottom: 5px; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="form-card">
+    <h3 class="text-center text-primary mb-4">GP VLE Identification Form</h3>
+    
+    <div id="alertBox"></div>
+
+    <form id="vleForm">
+      
+      <!-- Personal Details -->
+      <div class="section-title">1. Applicant Personal Details</div>
+      
+      <div class="mb-3">
+        <label class="form-label">Full Name (As per Aadhaar) *</label>
+        <input type="text" id="name" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Email ID (Linked with Aadhaar) *</label>
+        <input type="email" id="email" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Mobile Number (Linked with Aadhaar) *</label>
+        <input type="tel" id="mobile" class="form-control" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">PAN Card Number *</label>
+        <input type="text" id="pan" class="form-control" pattern="[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}" maxlength="10" style="text-transform:uppercase" placeholder="ABCDE1234F" required>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Computer Availability *</label>
+          <select id="computer" class="form-select" required>
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Gender *</label>
+          <select id="gender" class="form-select" onchange="toggleSHGSection()" required>
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- SHG Conditional Details -->
+      <div id="shgSection" style="display: none;">
+        <div class="section-title">Self Help Group (SHG) Details</div>
+        
+        <div class="mb-3">
+          <label class="form-label">Are you an SHG Member? *</label>
+          <select id="shgMember" class="form-select" onchange="toggleSHGFields()">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+          </select>
+        </div>
+
+        <div id="shgFields" style="display: none;">
+          <div class="mb-3">
+            <label class="form-label">SHG Group Name *</label>
+            <input type="text" id="shgName" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">SHG Group Code (11 Digits) *</label>
+            <input type="text" id="shgCode" class="form-control" maxlength="11" pattern="[0-9]{11}">
+          </div>
+        </div>
+      </div>
+
+      <!-- Location Mapping Details -->
+      <div class="section-title">2. Location Details (Vacant GP Selection)</div>
+
+      <div class="mb-3">
+        <label class="form-label">District *</label>
+        <select id="district" class="form-select" onchange="onDistrictChange()" required>
+          <option value="">Loading Districts...</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Block *</label>
+        <select id="block" class="form-select" onchange="onBlockChange()" required disabled>
+          <option value="">Select District First</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Gram Panchayat *</label>
+        <select id="gp" class="form-select" onchange="onGPChange()" required disabled>
+          <option value="">Select Block First</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Village *</label>
+        <select id="village" class="form-select" required disabled>
+          <option value="">Select GP First</option>
+        </select>
+      </div>
+
+      <button type="submit" id="submitBtn" class="btn btn-primary w-100 mt-3">Submit Application</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Replace with your Google Apps Script Web App URL
+  const SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL";
+
+  let masterTree = {};
+
+  // Fetch Master Data for Cascading Dropdowns
+  window.onload = function() {
+    fetch(SCRIPT_URL + "?action=getDropdownData")
+      .then(res => res.json())
+      .then(data => {
+        masterTree = data;
+        populateDistricts();
+      })
+      .catch(err => showAlert("Failed to load location data.", "danger"));
+  };
+
+  function populateDistricts() {
+    let distSelect = document.getElementById("district");
+    distSelect.innerHTML = '<option value="">Select District</option>';
+    Object.keys(masterTree).forEach(dist => {
+      distSelect.innerHTML += `<option value="${dist}">${dist}</option>`;
+    });
+  }
+
+  function onDistrictChange() {
+    let dist = document.getElementById("district").value;
+    let blockSelect = document.getElementById("block");
+    let gpSelect = document.getElementById("gp");
+    let villSelect = document.getElementById("village");
+
+    blockSelect.innerHTML = '<option value="">Select Block</option>';
+    gpSelect.innerHTML = '<option value="">Select Block First</option>';
+    villSelect.innerHTML = '<option value="">Select GP First</option>';
+
+    if (dist && masterTree[dist]) {
+      blockSelect.disabled = false;
+      Object.keys(masterTree[dist].blocks).forEach(block => {
+        blockSelect.innerHTML += `<option value="${block}">${block}</option>`;
+      });
+    } else {
+      blockSelect.disabled = true;
+      gpSelect.disabled = true;
+      villSelect.disabled = true;
+    }
+  }
+
+  function onBlockChange() {
+    let dist = document.getElementById("district").value;
+    let block = document.getElementById("block").value;
+    let gpSelect = document.getElementById("gp");
+    let villSelect = document.getElementById("village");
+
+    gpSelect.innerHTML = '<option value="">Select GP</option>';
+    villSelect.innerHTML = '<option value="">Select GP First</option>';
+
+    if (dist && block && masterTree[dist].blocks[block]) {
+      gpSelect.disabled = false;
+      Object.keys(masterTree[dist].blocks[block].gps).forEach(gp => {
+        gpSelect.innerHTML += `<option value="${gp}">${gp}</option>`;
+      });
+    } else {
+      gpSelect.disabled = true;
+      villSelect.disabled = true;
+    }
+  }
+
+  function onGPChange() {
+    let dist = document.getElementById("district").value;
+    let block = document.getElementById("block").value;
+    let gp = document.getElementById("gp").value;
+    let villSelect = document.getElementById("village");
+
+    villSelect.innerHTML = '<option value="">Select Village</option>';
+
+    if (dist && block && gp && masterTree[dist].blocks[block].gps[gp]) {
+      villSelect.disabled = false;
+      let villages = masterTree[dist].blocks[block].gps[gp].villages;
+      Object.keys(villages).forEach(vill => {
+        villSelect.innerHTML += `<option value="${vill}">${vill}</option>`;
+      });
+    } else {
+      villSelect.disabled = true;
+    }
+  }
+
+  function toggleSHGSection() {
+    let gender = document.getElementById("gender").value;
+    let shgSec = document.getElementById("shgSection");
+    if (gender === "Female") {
+      shgSec.style.display = "block";
+    } else {
+      shgSec.style.display = "none";
+      document.getElementById("shgMember").value = "No";
+      toggleSHGFields();
+    }
+  }
+
+  function toggleSHGFields() {
+    let isSHG = document.getElementById("shgMember").value;
+    let shgFields = document.getElementById("shgFields");
+    let shgName = document.getElementById("shgName");
+    let shgCode = document.getElementById("shgCode");
+
+    if (isSHG === "Yes") {
+      shgFields.style.display = "block";
+      shgName.required = true;
+      shgCode.required = true;
+    } else {
+      shgFields.style.display = "none";
+      shgName.required = false;
+      shgCode.required = false;
+      shgName.value = "";
+      shgCode.value = "";
+    }
+  }
+
+  // Handle Form Submission
+  document.getElementById("vleForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    let submitBtn = document.getElementById("submitBtn");
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Checking & Submitting...";
+
+    let dist = document.getElementById("district").value;
+    let block = document.getElementById("block").value;
+    let gp = document.getElementById("gp").value;
+    let vill = document.getElementById("village").value;
+
+    let payload = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      mobile: document.getElementById("mobile").value,
+      pan: document.getElementById("pan").value,
+      computer: document.getElementById("computer").value,
+      gender: document.getElementById("gender").value,
+      shgMember: document.getElementById("shgMember").value,
+      shgName: document.getElementById("shgName").value,
+      shgCode: document.getElementById("shgCode").value,
+      
+      districtName: dist,
+      districtCode: masterTree[dist].code,
+      blockName: block,
+      blockCode: masterTree[dist].blocks[block].code,
+      gpName: gp,
+      gpCode: masterTree[dist].blocks[block].gps[gp].code,
+      villageName: vill,
+      villageCode: masterTree[dist].blocks[block].gps[gp].villages[vill]
+    };
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(res => {
+      submitBtn.disabled = false;
+      submitBtn.innerText = "Submit Application";
+      
+      if (res.status === "DUPLICATE") {
+        showAlert(res.message, "danger");
+      } else if (res.status === "SUCCESS") {
+        showAlert(res.message, "success");
+        document.getElementById("vleForm").reset();
+        document.getElementById("shgSection").style.display = "none";
+      } else {
+        showAlert("Error: " + res.message, "danger");
+      }
+    })
+    .catch(err => {
+      submitBtn.disabled = false;
+      submitBtn.innerText = "Submit Application";
+      showAlert("An error occurred during submission.", "danger");
+    });
+  };
+
+  function showAlert(msg, type) {
+    document.getElementById("alertBox").innerHTML = `
+      <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+        ${msg}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    `;
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
