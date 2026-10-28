@@ -40,7 +40,6 @@
       color: var(--dark-text);
     }
 
-    /* Animated Dark Background Elements */
     body::before {
       content: '';
       position: fixed;
@@ -66,7 +65,6 @@
       z-index: 1;
     }
 
-    /* Header Section */
     .page-header {
       text-align: center;
       margin-bottom: 50px;
@@ -106,7 +104,6 @@
       overflow: hidden;
     }
 
-    /* Decorative gradient border */
     .form-card::before {
       content: '';
       position: absolute;
@@ -115,18 +112,6 @@
       right: 0;
       height: 3px;
       background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #10b981 100%);
-    }
-
-    /* Glow effect */
-    .form-card::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -50%;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
-      pointer-events: none;
     }
 
     .form-header {
@@ -169,13 +154,6 @@
       50% { transform: translateY(-12px); }
     }
 
-    .form-header p {
-      color: var(--dark-text-muted);
-      font-size: 0.95rem;
-      margin: 0;
-    }
-
-    /* Multi-step Navigation Progress Bar */
     .step-wizard {
       display: flex;
       justify-content: space-between;
@@ -208,7 +186,6 @@
       font-weight: 700;
       color: var(--dark-text-muted);
       transition: all 0.3s ease;
-      cursor: default;
     }
 
     .step-wizard-step.active {
@@ -249,49 +226,20 @@
     }
 
     @keyframes fadeIn {
-      from { 
-        opacity: 0; 
-        transform: translateY(15px); 
-      }
-      to { 
-        opacity: 1; 
-        transform: translateY(0); 
-      }
-    }
-
-    @keyframes slideDownFade {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideUpFade {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .form-label {
       font-weight: 700;
       color: var(--dark-text);
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       margin-bottom: 10px;
       display: flex;
       align-items: center;
       gap: 5px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      font-size: 0.85rem;
     }
 
     .form-label::after {
@@ -309,28 +257,12 @@
       color: var(--dark-text);
     }
 
-    .form-control::placeholder, 
-    .form-select::placeholder {
-      color: var(--dark-text-muted);
-    }
-
     .form-control:focus, .form-select:focus {
       border-color: #667eea;
       background-color: rgba(15, 23, 42, 0.8);
       box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
       outline: none;
       color: var(--dark-text);
-    }
-
-    .form-control:hover, .form-select:hover {
-      border-color: rgba(102, 126, 234, 0.5);
-      background-color: rgba(15, 23, 42, 0.7);
-    }
-
-    .form-control.is-invalid,
-    .form-select.is-invalid {
-      border-color: #f87171;
-      background-image: none;
     }
 
     .invalid-feedback {
@@ -340,9 +272,7 @@
       display: block;
     }
 
-    .mb-3 {
-      margin-bottom: 22px;
-    }
+    .mb-3 { margin-bottom: 22px; }
 
     .btn-custom {
       padding: 13px 32px;
@@ -362,22 +292,10 @@
       box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
     }
 
-    .btn-primary.btn-custom:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
-      background: linear-gradient(135deg, #5568d3 0%, #6a3d8f 100%);
-    }
-
     .btn-success.btn-custom {
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       color: white;
       box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
-    }
-
-    .btn-success.btn-custom:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(16, 185, 129, 0.6);
-      background: linear-gradient(135deg, #0d9668 0%, #047857 100%);
     }
 
     .btn-outline-secondary.btn-custom {
@@ -386,77 +304,26 @@
       background: transparent;
     }
 
-    .btn-outline-secondary.btn-custom:hover {
-      background: rgba(102, 126, 234, 0.1);
-      border-color: #667eea;
-      color: var(--dark-text);
-    }
-
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    /* Button layout */
-    .d-flex {
-      gap: 15px;
-      position: relative;
-      z-index: 2;
-    }
-
-    /* SHG Section Styling */
     #shgSection {
       background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(13, 110, 253, 0.1) 100%);
       border: 2px solid rgba(16, 185, 129, 0.3);
       border-radius: 15px;
       padding: 25px;
       margin-bottom: 25px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    #shgSection::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 120px;
-      height: 120px;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
-      border-radius: 50%;
-      margin: -40px -40px 0 0;
     }
 
     #shgSection h6 {
       color: #86efac;
       font-weight: 900;
       font-size: 1.05rem;
-      position: relative;
-      z-index: 1;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
-    #shgSection .form-label {
-      color: #a7f3d0;
-    }
-
-    #shgSection .form-control,
-    #shgSection .form-select {
-      background-color: rgba(16, 185, 129, 0.05);
-      border-color: rgba(16, 185, 129, 0.3);
-    }
-
-    /* Alert Messages */
     .alert {
       border-radius: 12px;
-      border: 1px solid;
       padding: 16px 20px;
       margin-bottom: 20px;
       font-weight: 600;
-      animation: slideDownFade 0.4s ease-out;
-      position: relative;
-      z-index: 2;
     }
 
     .alert-danger {
@@ -465,133 +332,31 @@
       border-color: rgba(220, 38, 38, 0.3);
     }
 
-    .alert-success {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%);
-      color: #86efac;
-      border-color: rgba(16, 185, 129, 0.3);
-    }
-
-    /* Modal Styling */
     .modal-content {
-      border: none;
       border-radius: 20px;
-      box-shadow: var(--shadow-lg);
       background: linear-gradient(135deg, #1e293b 0%, #1a2332 100%);
       border: 1px solid rgba(102, 126, 234, 0.2);
-      border-top: 4px solid #10b981;
     }
 
-    .modal-success-icon {
-      font-size: 80px;
-      color: #10b981;
-      margin-bottom: 20px;
-      animation: scalePopIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.4));
-    }
+    .modal-icon-success { color: #10b981; font-size: 80px; }
+    .modal-icon-warning { color: #f59e0b; font-size: 80px; }
 
-    @keyframes scalePopIn {
-      0% {
-        opacity: 0;
-        transform: scale(0);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .modal-body h3 {
-      color: #86efac;
-      font-weight: 900;
-      font-size: 1.8rem;
-    }
-
-    .modal-body p {
-      color: var(--dark-text-muted);
-      font-size: 1rem;
-    }
-
-    /* Responsive Design */
     @media (max-width: 768px) {
-      .page-header h1 {
-        font-size: 2rem;
-      }
-
-      .form-card {
-        padding: 30px;
-        border-radius: 15px;
-      }
-
-      .step-wizard {
-        gap: 10px;
-        padding: 15px 0;
-      }
-
-      .step-wizard-step {
-        font-size: 0.75rem;
-        padding: 0 8px;
-      }
-
-      .step-icon {
-        width: 45px;
-        height: 45px;
-        font-size: 16px;
-      }
-
-      .btn-custom {
-        width: 100%;
-        padding: 14px 20px;
-      }
-
-      .d-flex {
-        flex-direction: column;
-      }
-
-      .justify-content-between {
-        justify-content: center !important;
-      }
-
-      .row {
-        margin-left: -8px;
-        margin-right: -8px;
-      }
-
-      .col-md-6 {
-        padding-left: 8px;
-        padding-right: 8px;
-        width: 100%;
-      }
-
-      .form-header h3 {
-        font-size: 1.5rem;
-      }
-    }
-
-    /* Loading spinner animation */
-    .spinner-border-sm {
-      width: 1rem;
-      height: 1rem;
-      border-width: 0.2em;
-    }
-
-    /* Smooth scrolling */
-    html {
-      scroll-behavior: smooth;
+      .form-card { padding: 30px; }
+      .d-flex { flex-direction: column; }
+      .btn-custom { width: 100%; }
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <!-- PAGE HEADER -->
   <div class="page-header">
     <h1>GP VLE Identification</h1>
     <p>Empower Your Rural Business - Complete Your Registration Today</p>
   </div>
 
   <div class="form-card">
-    
-    <!-- FORM HEADER -->
     <div class="form-header">
       <div class="icon-header">
         <i class="fa-solid fa-id-card"></i>
@@ -600,9 +365,7 @@
       <p>Select your location first, then provide your personal details</p>
     </div>
 
-    <!-- FORM WRAPPER -->
     <div id="formWrapper">
-      <!-- Step Indicator -->
       <div class="step-wizard">
         <div class="step-wizard-step active" id="wizardStep1">
           <div class="step-icon">1</div>
@@ -617,8 +380,7 @@
       <div id="alertBox"></div>
 
       <form id="vleForm" novalidate>
-        
-        <!-- STEP 1: LOCATION MAPPING (FIRST STEP) -->
+        <!-- STEP 1: LOCATION MAPPING -->
         <div class="form-step active" id="step1">
           <div class="mb-3">
             <label class="form-label">District</label>
@@ -659,7 +421,7 @@
           </div>
         </div>
 
-        <!-- STEP 2: PERSONAL DETAILS (SECOND STEP) -->
+        <!-- STEP 2: PERSONAL DETAILS -->
         <div class="form-step" id="step2">
           <div class="mb-3">
             <label class="form-label">Full Name (As per Aadhaar)</label>
@@ -677,12 +439,6 @@
             <label class="form-label">Mobile Number (Linked with Aadhaar)</label>
             <input type="tel" id="mobile" class="form-control" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" required>
             <div class="invalid-feedback">Please enter a valid 10-digit mobile number.</div>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">PAN Card Number</label>
-            <input type="text" id="pan" class="form-control" pattern="[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}" maxlength="10" style="text-transform:uppercase" placeholder="ABCDE1234F" required>
-            <div class="invalid-feedback">Please enter a valid 10-character PAN Card Number.</div>
           </div>
 
           <div class="row">
@@ -744,23 +500,19 @@
             </button>
           </div>
         </div>
-
       </form>
     </div>
-
   </div>
 </div>
 
-<!-- SUCCESS CENTER POPUP MODAL -->
-<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true" data-bs-backdrop="static">
+<!-- POPUP MODAL (SUCCESS & DUPLICATE MESSAGE) -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-4">
-      <div class="modal-body text-center">
-        <div class="modal-success-icon">
-          <i class="fa-solid fa-circle-check"></i>
-        </div>
-        <h3 class="fw-bold mb-2">Success!</h3>
-        <p class="fs-5 mb-4">Your application has been submitted successfully! We'll contact you soon.</p>
+    <div class="modal-content p-4 text-center">
+      <div class="modal-body">
+        <div id="modalIconContainer" class="mb-3"></div>
+        <h3 id="modalTitle" class="fw-bold mb-3"></h3>
+        <p id="modalMessage" class="fs-5 mb-4 text-light"></p>
         <button type="button" class="btn btn-success btn-custom px-5" data-bs-dismiss="modal" onclick="resetFormToStart()">OK</button>
       </div>
     </div>
@@ -770,12 +522,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-  // YOUR APPS SCRIPT WEB APP URL HERE
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfWyXMh4F18bQwP2qCvmh6VjZUfEiNuzewkQ3Ut0IY1jVn1VNdSxa2nXs8NV23as1wkQ/exec";
-
   let masterTree = {};
 
-  // Fetch Master JSON Data
   window.onload = function() {
     loadDropdownData();
   };
@@ -894,7 +643,6 @@
     }
   }
 
-  // STEP NAVIGATION & STRICT VALIDATION
   function goToStep2() {
     let step1Container = document.getElementById("step1");
     let inputs = step1Container.querySelectorAll("select");
@@ -927,15 +675,13 @@
     document.getElementById("wizardStep2").classList.remove("active");
   }
 
-  // RESET FORM & RE-FETCH DROPDOWN DATA
   function resetFormToStart() {
     document.getElementById("vleForm").reset();
     document.getElementById("shgSection").style.display = "none";
     goToStep1();
-    loadDropdownData(); // Auto refresh dropdowns to remove filled GPs
+    loadDropdownData();
   }
 
-  // SUBMIT FORM
   document.getElementById("vleForm").onsubmit = function(e) {
     e.preventDefault();
 
@@ -970,7 +716,6 @@
       name: document.getElementById("name").value,
       email: document.getElementById("email").value,
       mobile: document.getElementById("mobile").value,
-      pan: document.getElementById("pan").value,
       computer: document.getElementById("computer").value,
       gender: document.getElementById("gender").value,
       shgMember: document.getElementById("shgMember").value,
@@ -996,12 +741,12 @@
       submitBtn.disabled = false;
       submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane me-2"></i> Submit Application`;
       
-      if (res.status === "DUPLICATE" || res.status === "LIMIT_EXCEEDED") {
+      if (res.status === "DUPLICATE") {
+        showPopUp("सूचना", res.message, "warning");
+      } else if (res.status === "LIMIT_EXCEEDED") {
         showAlert(res.message, "danger");
       } else if (res.status === "SUCCESS") {
-        document.getElementById("alertBox").innerHTML = "";
-        let successModal = new bootstrap.Modal(document.getElementById('successModal'));
-        successModal.show();
+        showPopUp("सफलता!", "आपका आवेदन सफलतापूर्वक जमा कर दिया गया है।", "success");
       } else {
         showAlert("Error: " + res.message, "danger");
       }
@@ -1012,6 +757,24 @@
       showAlert("An error occurred during submission. Please try again.", "danger");
     });
   };
+
+  function showPopUp(title, message, type) {
+    document.getElementById("alertBox").innerHTML = "";
+    document.getElementById("modalTitle").innerText = title;
+    document.getElementById("modalMessage").innerText = message;
+    
+    let iconContainer = document.getElementById("modalIconContainer");
+    if (type === "warning") {
+      iconContainer.innerHTML = `<i class="fa-solid fa-triangle-exclamation modal-icon-warning"></i>`;
+      document.getElementById("modalTitle").style.color = "#f59e0b";
+    } else {
+      iconContainer.innerHTML = `<i class="fa-solid fa-circle-check modal-icon-success"></i>`;
+      document.getElementById("modalTitle").style.color = "#86efac";
+    }
+
+    let modal = new bootstrap.Modal(document.getElementById('infoModal'));
+    modal.show();
+  }
 
   function showAlert(msg, type) {
     document.getElementById("alertBox").innerHTML = `
